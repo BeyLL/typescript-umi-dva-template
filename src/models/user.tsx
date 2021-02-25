@@ -3,7 +3,7 @@
  * @Email: zhangwh@uway.com
  * @Date: 2021-02-24 15:58:01
  * @Description: 
- * @LastEditTime: 2021-02-25 16:40:13
+ * @LastEditTime: 2021-02-25 16:42:45
  */
 
 import { AnyAction, Reducer } from 'redux';
@@ -42,7 +42,7 @@ export interface userModelType {
 const LoginModel: userModelType = {
     namespace: 'user',
     state: {
-        userList: {}
+        userList: []
     },
     effects: {
         *getUser({ payload }, { put, call }) {

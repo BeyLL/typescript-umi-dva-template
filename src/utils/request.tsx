@@ -1,5 +1,4 @@
 import axios from 'axios';
-import router from 'umi/router';
 import { cloneDeep, isEmpty } from 'lodash';
 import pathToRegexp from 'path-to-regexp';
 import { message } from 'antd';
