@@ -1,0 +1,10 @@
+{
+  "headers": [
+    {
+      "Content-Type": "application/json"
+    }
+  ],
+  "api": {
+    "login": "/mainAssets/get_mainAsset_list"
+  }
+}

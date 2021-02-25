@@ -1,0 +1,10 @@
+{
+  "headers": [
+    {
+      "Content-Type": "application/json"
+    }
+  ],
+  "api": {
+    "userlist": "/inspection/intelliInspection/getStatisticData"
+  }
+}
