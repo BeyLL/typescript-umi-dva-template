@@ -1,7 +1,6 @@
 import request from '@/utils/request'
 const apiJson = require('./api.json')
 const { api } = apiJson
-console.log(api)
 interface UserOption {
     [key: string]: any
 }

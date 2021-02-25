@@ -3,7 +3,7 @@
  * @Email: zhangwh@uway.com
  * @Date: 2021-02-24 15:58:01
  * @Description: 
- * @LastEditTime: 2021-02-25 16:13:45
+ * @LastEditTime: 2021-02-25 16:40:13
  */
 
 import { AnyAction, Reducer } from 'redux';
@@ -11,11 +11,11 @@ import { EffectsCommandMap, Subscription } from 'dva';
 import router from 'umi/router';
 import Cookie from 'js-cookie'
 
-import {getUser} from '@/services/user'
+import { getUser } from '@/services/user'
 
 //定义状态接口
 export interface userModelState {
-    userList: object;
+    userList: Array<any>;
     // [x: string]: string   //任意属性值都应该是string类型
 }
 
@@ -46,9 +46,10 @@ const LoginModel: userModelType = {
     },
     effects: {
         *getUser({ payload }, { put, call }) {
-            const data = yield call(getUser,payload)
-           console.log(data)
-
+            const { data, success } = yield call(getUser, payload)
+            if (success) {
+                yield put({ type: 'updateState', payload: { userList: data || [] } })
+            }
         }
     },
     reducers: {

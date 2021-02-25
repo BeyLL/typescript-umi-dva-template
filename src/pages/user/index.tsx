@@ -7,6 +7,8 @@ interface UserProps {
     loading?:boolean
 }
 const User: React.FC<UserProps>=({dispatch,user,loading}) => {
+    const {userList} = user;
+    console.log(userList)
     useEffect(() => {
         dispatch({type:'user/getUser',payload:{}})
     }, [])
