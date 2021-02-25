@@ -3,14 +3,11 @@
  * @Email: zhangwh@uway.com
  * @Date: 2021-02-24 15:58:01
  * @Description: 
- * @LastEditTime: 2021-02-25 16:42:45
+ * @LastEditTime: 2021-02-25 16:53:44
  */
 
 import { AnyAction, Reducer } from 'redux';
 import { EffectsCommandMap, Subscription } from 'dva';
-import router from 'umi/router';
-import Cookie from 'js-cookie'
-
 import { getUser } from '@/services/user'
 
 //定义状态接口
