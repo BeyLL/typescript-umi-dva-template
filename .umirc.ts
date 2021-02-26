@@ -5,20 +5,30 @@ const config: IConfig = {
     treeShaking: true,
     routes: [
         { path: '/login', component: '../pages/login' },
+        { path: '/register', component: '../pages/register', name: '注册' },
         {
             path: '/',
             component: '../layouts/index',
             routes: [
-                { path: '/', name: '首页', icon: 'home', component: '../pages/index' },
-                { path: '/user', component: '../pages/user', name: '用户列表', icon: 'github' },
+                { path: '/', redirect: '/home/index' },
                 {
-                    path: '/form', name: '表单', icon: 'form', routes: [
-                        { path: '/form/pay', component: '../pages/form/formpay', name: '支付页' },
-                        { path: '/form/paylist', component: '../pages/form/paylist', name: '支付列表' }
-                    ]
-                }
+                    path: '/home',
+                    component: '../pages/_layout',
+                    routes: [
+                        { path: '/home/index', name: '首页', icon: 'home', component: '../pages/index' },
+                        { path: '/home/user', component: '../pages/user', name: '用户列表', icon: 'github' },
+                        {
+                            path: '/home/form', name: '表单', icon: 'form', routes: [
+                                { path: '/home/form/pay', component: '../pages/form/formpay', name: '支付页' },
+                                { path: '/home/form/paylist', component: '../pages/form/paylist', name: '支付列表' }
+                            ]
+                        }
+                    ],
+                },
+
             ]
-        }
+        },
+
     ],
     plugins: [
         // ref: https://umijs.org/plugin/umi-plugin-react.html

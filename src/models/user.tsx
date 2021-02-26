@@ -3,7 +3,7 @@
  * @Email: zhangwh@uway.com
  * @Date: 2021-02-24 15:58:01
  * @Description: 
- * @LastEditTime: 2021-02-25 16:53:44
+ * @LastEditTime: 2021-02-26 11:48:30
  */
 
 import { AnyAction, Reducer } from 'redux';
@@ -17,10 +17,16 @@ export interface userModelState {
 }
 
 //定义类型
+/**typescript中的&是交叉类型并不是按位与 */
 export type Effect = (
     action: AnyAction,
-    effects: EffectsCommandMap & { select: <T>(func: (state: {}) => T) => T }
+    effects: EffectsCommandMap & { select: <T>(func: (state: InitState) => T) => T }
 ) => void;
+
+
+interface InitState {
+    [modelState: string]: any
+}
 
 //定义接口
 export interface userModelType {
@@ -42,7 +48,7 @@ const LoginModel: userModelType = {
         userList: []
     },
     effects: {
-        *getUser({ payload }, { put, call }) {
+        *getUser({ payload }: any, { put, call }: any) {
             const { data, success } = yield call(getUser, payload)
             if (success) {
                 yield put({ type: 'updateState', payload: { userList: data || [] } })

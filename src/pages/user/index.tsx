@@ -4,13 +4,13 @@ import { userModelState } from '@/models/user'
 interface UserProps {
     dispatch: Dispatch;
     user: userModelState;
-    loading?:boolean
+    loading?: boolean
 }
-const User: React.FC<UserProps>=({dispatch,user,loading}) => {
-    const {userList} = user;
-    console.log(userList)
+const User: React.FC<UserProps> = ({ dispatch, user, loading }) => {
+    const { userList } = user;
+
     useEffect(() => {
-        dispatch({type:'user/getUser',payload:{}})
+        dispatch({ type: 'user/getUser', payload: {} })
     }, [])
 
     return (
@@ -20,4 +20,4 @@ const User: React.FC<UserProps>=({dispatch,user,loading}) => {
     );
 }
 
-export default connect(({user})=>({user}))(User);
+export default connect(({ user,loading }: { user: userModelState,loading }) => ({ user,loading }))(User);
