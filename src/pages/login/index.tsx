@@ -1,11 +1,18 @@
-import React from 'react';
-import { connect } from 'dva'
+import React, { ComponentProps } from 'react';
+import { connect,Dispatch } from 'dva'
+// import {ReactComponentProps} from 'umi/router'
 import { Form, Button, Input, Checkbox, Icon } from 'antd'
+import { FormComponentProps } from 'antd/es/form';
 // import {} from '@/models/connect'
+import FormData from '@/components/Form/FormData'
+import { deleteNull } from '@/utils'
 import _style from './index.less'
 
-
-const Login: React.FC = props => {
+interface LoginProps {
+    form: FormComponentProps['form'];
+    dispatch: Dispatch<any>
+}
+const Login: React.FC<LoginProps> = props => {
     const { form, dispatch } = props;
     const { getFieldDecorator, validateFields } = form;
     //提交表单
@@ -13,45 +20,94 @@ const Login: React.FC = props => {
         e.preventDefault();
         validateFields((err: any, values: object) => {
             if (!err) {
+                deleteNull(values)
                 dispatch({ type: 'login/loginInfo', payload: values })
             }
         })
 
     }
 
+    //表单数据
+    const formProps = {
+        formColumns: [
+            {
+
+                placeholder: '请输入用户名',
+                field: 'user',
+                ruleValue: {
+                    rules: [
+                        {
+                            required: true,
+                            message: '请输入用户名',
+                        }
+                    ],
+                },
+                prefix: <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />,
+                formItemLayout: {
+                    labelCol: {
+                        xs: { span: 0 },
+                        sm: { span: 0 },
+                    },
+                    wrapperCol: {
+                        xs: { span: 24 },
+                        sm: { span: 24 },
+                    },
+                },
+            },
+            {
+                type: 'input',
+                placeholder: '请输入密码',
+                field: 'password',
+                ruleValue: {
+                    rules: [
+                        {
+                            required: true,
+                            message: '请输入密码',
+                        }
+                    ],
+                },
+                inputType: 'password',
+                formItemLayout: {
+                    labelCol: {
+                        xs: { span: 0 },
+                        sm: { span: 0 },
+                    },
+                    wrapperCol: {
+                        xs: { span: 24 },
+                        sm: { span: 24 },
+                    },
+                },
+                prefix: <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />,
+            },
+            {
+                type: 'check',
+                field: 'forget',
+                labelText: '记住密码',
+
+            },
+            {
+                type: 'btn',
+
+                btnLists: [
+                    {
+                        title: '登录',
+                        type: 'primary',
+
+                        clickFuc: `onSubmitValues`,
+                    }
+                ],
+            },
+        ],
+        formValue: (values:object) => {
+            dispatch({ type: 'login/login', payload: {values} });
+        },
+    };
+
+
     return (
         <div className={_style.loginContainer}>
             <div className={_style.subForm}>
-                <Form onSubmit={handleSubmit} className="login-form">
-                    <Form.Item>
-                        {getFieldDecorator(`username`, {
-                            // initialValue: this.state.username,
-                            rules: [{ required: true, message: '用户名不能为空' }]
-                        })(
-                            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='username' />
-                        )}
-                    </Form.Item>
-                    <Form.Item>
-                        {getFieldDecorator(`password`, {
-                            // initialValue: this.state.password,
-                            rules: [{ required: true, message: '密码不能为空' }]
-                        })(
-                            <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder='password' />
-                        )}
-                    </Form.Item>
-                    <Form.Item>
-                        {getFieldDecorator(`remember`, {
-                            valuePropName: 'checked',
-                            // initialValue: this.state.remember,
-                        })(
-                            <Checkbox>记住密码</Checkbox>
-                        )}
-                    </Form.Item>
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit" className={_style.loginFormButton}>登录</Button>
-                    </Form.Item>
-
-                </Form>
+                <FormData {...formProps} />
             </div>
         </div>
     );

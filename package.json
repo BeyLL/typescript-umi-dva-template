@@ -10,6 +10,7 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
+    "@types/classnames": "^2.2.11",
     "@types/js-cookie": "^2.2.6",
     "js-cookie": "^2.2.1",
     "react": "^16.8.6",

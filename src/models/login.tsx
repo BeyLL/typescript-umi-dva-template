@@ -3,7 +3,7 @@
  * @Email: zhangwh@uway.com
  * @Date: 2021-02-24 15:58:01
  * @Description: 
- * @LastEditTime: 2021-02-25 16:12:44
+ * @LastEditTime: 2021-03-01 11:27:03
  */
 
 import { AnyAction, Reducer } from 'redux';
@@ -11,7 +11,7 @@ import { EffectsCommandMap, Subscription } from 'dva';
 import router from 'umi/router';
 
 import Cookie from 'js-cookie'
-
+import {sendLogin} from '@/services/login'
 //定义状态接口
 export interface LoginModelState {
     name: string;
@@ -46,7 +46,8 @@ const LoginModel: LoginModelType = {
     effects: {
         *loginInfo({ payload }, { put, call }) {
             const { password } = payload
-            // const data = yield call()
+            // const data = yield call(sendLogin,payload)
+            
             if (password == 'admin') router.push('/')
             Cookie.set('Authorization', 'zhang')
 

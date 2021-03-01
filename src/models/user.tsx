@@ -3,7 +3,7 @@
  * @Email: zhangwh@uway.com
  * @Date: 2021-02-24 15:58:01
  * @Description: 
- * @LastEditTime: 2021-02-26 11:48:30
+ * @LastEditTime: 2021-03-01 11:26:08
  */
 
 import { AnyAction, Reducer } from 'redux';
@@ -48,7 +48,7 @@ const LoginModel: userModelType = {
         userList: []
     },
     effects: {
-        *getUser({ payload }: any, { put, call }: any) {
+        *getUser({ payload }: any, { put, call }) {
             const { data, success } = yield call(getUser, payload)
             if (success) {
                 yield put({ type: 'updateState', payload: { userList: data || [] } })

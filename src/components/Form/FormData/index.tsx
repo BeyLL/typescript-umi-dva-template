@@ -3,7 +3,7 @@
  * @Email: zhangwh@uway.com
  * @Date: 2021-03-01 11:28:31
  * @Description: 
- * @LastEditTime: 2021-03-01 16:32:29
+ * @LastEditTime: 2021-03-01 17:46:20
  */
 
 'use strict';
@@ -12,7 +12,7 @@ import React, { createElement } from 'react';
 
 //插件
 import { Row, Col, Form, Input, Button, Select, DatePicker, Checkbox } from 'antd';
-import {FormComponentProps} from 'antd/es/form'
+import { FormComponentProps } from 'antd/es/form'
 import classnams from 'classnames';
 
 //样式
@@ -25,15 +25,15 @@ const FormItem = Form.Item,
     c = createElement;
 
 interface DefaltProps {
-    formClass?:string;
+    formClass?: string;
     formValue: (p: object) => void;
-    formColumns: any[];
-    form:FormComponentProps['form']
+    formColumns: Array<any>;
+    form: FormComponentProps['form']
 }
 
 export interface CommonOptions {
     placeholder: string;
-    field: string|undefined;
+    field: string;
     ruleValue: {
         rules: any[]
     };
@@ -44,12 +44,14 @@ export interface CommonOptions {
     labelText: string;
 }
 
+type FormProps = Partial<CommonOptions>
 
 
-const FormData:React.FC<DefaltProps> = (props) => {
-    console.log(props)
+
+const FormData: React.FC<DefaltProps> = (props) => {
     const { formClass, formColumns, formValue, form } = props;
     const { getFieldDecorator, validateFields, resetFields } = form;
+    console.log(getFieldDecorator)
 
     let formItem = {
         labelCol: {
@@ -84,8 +86,7 @@ const FormData:React.FC<DefaltProps> = (props) => {
     //表单样式
     const components = {
         //输入框
-        input: (values: Partial<CommonOptions>) => {
-            console.log(values)
+        input: (values: FormProps) => {
             const { placeholder, field, ruleValue = {}, prefix, inputType } = values;
             return getFieldDecorator(field, { ...ruleValue })(
                 <Input placeholder={placeholder} prefix={prefix} type={inputType} />,
@@ -93,7 +94,7 @@ const FormData:React.FC<DefaltProps> = (props) => {
         },
 
         //下拉框
-        select: (values: Partial<CommonOptions>) => {
+        select: (values: FormProps) => {
             const { placeholder, field, ruleValue = {}, selectLists = [] } = values;
             return getFieldDecorator(field, { ...ruleValue })(
                 c(
@@ -105,23 +106,23 @@ const FormData:React.FC<DefaltProps> = (props) => {
         },
 
         //日期
-        date: (values: Partial<CommonOptions>) => {
+        date: (values: FormProps) => {
             const { placeholder, field, ruleValue = {} } = values;
             return getFieldDecorator(field, { ...ruleValue })(<DatePicker placeholder={placeholder} />);
         },
-        range: (values: Partial<CommonOptions>) => {
+        range: (values: FormProps) => {
             const { placeholder, field, ruleValue = {} } = values;
             return getFieldDecorator(field, { ...ruleValue })(<RangePicker placeholder={placeholder} />);
         },
 
         //复选框
-        check: (values: Partial<CommonOptions>) => {
+        check: (values: FormProps) => {
             const { labelText, field, ruleValue = {} } = values;
             return getFieldDecorator(field, { ...ruleValue })(<Checkbox>{labelText}</Checkbox>);
         },
 
         //操作按钮
-        btn: (values: Partial<CommonOptions>) => {
+        btn: (values: FormProps) => {
             const { btnLists = [] } = values;
             return btnLists.map(({ type, title, btnClass, clickFuc }, index) =>
                 c(Button, { className: btnClass, onClick: btnFunction[clickFuc], type, key: index }, title),
@@ -152,4 +153,4 @@ const FormData:React.FC<DefaltProps> = (props) => {
     );
 };
 
-export default Form.create()(FormData);
+export default Form.create<any>()(FormData);
