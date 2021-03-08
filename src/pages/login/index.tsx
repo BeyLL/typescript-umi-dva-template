@@ -1,31 +1,21 @@
-import React, { ComponentProps } from 'react';
-import { connect,Dispatch } from 'dva'
-// import {ReactComponentProps} from 'umi/router'
-import { Form, Button, Input, Checkbox, Icon } from 'antd'
-import { FormComponentProps } from 'antd/es/form';
-// import {} from '@/models/connect'
+import React from 'react';
+import { connect, Dispatch } from 'dva'
+//組件
+import { Icon } from 'antd'
 import FormData from '@/components/Form/FormData'
+
+//工具
 import { deleteNull } from '@/utils'
+
+
+
 import _style from './index.less'
 
 interface LoginProps {
-    form: FormComponentProps['form'];
     dispatch: Dispatch<any>
 }
 const Login: React.FC<LoginProps> = props => {
-    const { form, dispatch } = props;
-    const { getFieldDecorator, validateFields } = form;
-    //提交表单
-    const handleSubmit = (e: React.SyntheticEvent) => {
-        e.preventDefault();
-        validateFields((err: any, values: object) => {
-            if (!err) {
-                deleteNull(values)
-                dispatch({ type: 'login/loginInfo', payload: values })
-            }
-        })
-
-    }
+    const { dispatch } = props;
 
     //表单数据
     const formProps = {
@@ -83,23 +73,23 @@ const Login: React.FC<LoginProps> = props => {
                 type: 'check',
                 field: 'forget',
                 labelText: '记住密码',
-
+                formItemClass: _style.loginItem
             },
             {
                 type: 'btn',
-
                 btnLists: [
                     {
                         title: '登录',
                         type: 'primary',
-
                         clickFuc: `onSubmitValues`,
+                        btnClass: _style.loginBtn
                     }
                 ],
             },
         ],
-        formValue: (values:object) => {
-            dispatch({ type: 'login/login', payload: {values} });
+        formValue: (values: object) => {
+            deleteNull(values)
+            dispatch({ type: 'login/loginInfo', payload: values });
         },
     };
 
@@ -113,4 +103,4 @@ const Login: React.FC<LoginProps> = props => {
     );
 }
 
-export default connect()(Form.create()(Login));
+export default connect()(Login);

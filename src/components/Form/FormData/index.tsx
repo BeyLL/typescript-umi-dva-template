@@ -3,10 +3,10 @@
  * @Email: zhangwh@uway.com
  * @Date: 2021-03-01 11:28:31
  * @Description: 
- * @LastEditTime: 2021-03-01 17:46:20
+ * @LastEditTime: 2021-03-02 10:11:51
  */
 
-'use strict';
+// 'use strict';
 
 import React, { createElement } from 'react';
 
@@ -24,15 +24,14 @@ const FormItem = Form.Item,
     { Option } = Select,
     c = createElement;
 
-interface DefaltProps {
+interface DefaltProps extends FormComponentProps {
     formClass?: string;
     formValue: (p: object) => void;
-    formColumns: Array<any>;
-    form: FormComponentProps['form']
-}
+    formColumns: Array<any>
+  }
 
 export interface CommonOptions {
-    placeholder: string;
+    placeholder: string|Array<string>[2];
     field: string;
     ruleValue: {
         rules: any[]
@@ -46,12 +45,9 @@ export interface CommonOptions {
 
 type FormProps = Partial<CommonOptions>
 
-
-
 const FormData: React.FC<DefaltProps> = (props) => {
     const { formClass, formColumns, formValue, form } = props;
     const { getFieldDecorator, validateFields, resetFields } = form;
-    console.log(getFieldDecorator)
 
     let formItem = {
         labelCol: {
@@ -94,7 +90,7 @@ const FormData: React.FC<DefaltProps> = (props) => {
         },
 
         //下拉框
-        select: (values: FormProps) => {
+        select: (values: FormProps) => {    
             const { placeholder, field, ruleValue = {}, selectLists = [] } = values;
             return getFieldDecorator(field, { ...ruleValue })(
                 c(
@@ -110,6 +106,7 @@ const FormData: React.FC<DefaltProps> = (props) => {
             const { placeholder, field, ruleValue = {} } = values;
             return getFieldDecorator(field, { ...ruleValue })(<DatePicker placeholder={placeholder} />);
         },
+        
         range: (values: FormProps) => {
             const { placeholder, field, ruleValue = {} } = values;
             return getFieldDecorator(field, { ...ruleValue })(<RangePicker placeholder={placeholder} />);
@@ -153,4 +150,4 @@ const FormData: React.FC<DefaltProps> = (props) => {
     );
 };
 
-export default Form.create<any>()(FormData);
+export default Form.create<DefaltProps>()(FormData);

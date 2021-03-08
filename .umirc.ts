@@ -48,7 +48,7 @@ const config: IConfig = {
     ],
 
     proxy: {
-        "/inspection": {
+        "/inspection_tianfu": {
             'target': 'http://192.168.8.190:9090/',
             'changeOrigin': true,
             // 'pathRewrite': { '^/api': '' },

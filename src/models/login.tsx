@@ -3,7 +3,7 @@
  * @Email: zhangwh@uway.com
  * @Date: 2021-02-24 15:58:01
  * @Description: 
- * @LastEditTime: 2021-03-01 11:27:03
+ * @LastEditTime: 2021-03-05 10:12:20
  */
 
 import { AnyAction, Reducer } from 'redux';
@@ -41,15 +41,14 @@ export interface LoginModelType {
 const LoginModel: LoginModelType = {
     namespace: 'login',
     state: {
-        name: 'zhang'
+        name: 'v'
     },
     effects: {
         *loginInfo({ payload }, { put, call }) {
             const { password } = payload
             // const data = yield call(sendLogin,payload)
-            
-            if (password == 'admin') router.push('/')
-            Cookie.set('Authorization', 'zhang')
+             router.push('/')
+            Cookie.set('Authorization', 'v')
 
         }
     },

@@ -3,16 +3,18 @@
  * @Email: zhangwh@uway.com
  * @Date: 2021-02-24 15:58:01
  * @Description: 
- * @LastEditTime: 2021-03-01 11:26:08
+ * @LastEditTime: 2021-03-08 10:57:53
  */
 
 import { AnyAction, Reducer } from 'redux';
 import { EffectsCommandMap, Subscription } from 'dva';
 import { getUser } from '@/services/user'
+import {Pagination} from '@/components/Pagination'
 
 //定义状态接口
 export interface userModelState {
     userList: Array<any>;
+    userListPages:Object;
     // [x: string]: string   //任意属性值都应该是string类型
 }
 
@@ -45,7 +47,8 @@ export interface userModelType {
 const LoginModel: userModelType = {
     namespace: 'user',
     state: {
-        userList: []
+        userList: [],
+        userListPages:new Pagination({dispatchType:'getUser',showSizeChanger:true})
     },
     effects: {
         *getUser({ payload }: any, { put, call }) {
